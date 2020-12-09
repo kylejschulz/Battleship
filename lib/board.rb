@@ -23,9 +23,16 @@ class Board
   end
 
   def valid_coordinate?(coordinate)
-    @cells.include?(coordinate)
+    a = @cells.keys
+    b = [coordinate].flatten
+
+    if (b & a) == b
+      true
+    else
+      false
+    end
   end
-#Change valid_coordinate? to not pass for only one coordinate
+
   def valid_placement?(ship, coordinates)
     ship.length == coordinates.length && valid_coordinate?(coordinates)
   end
