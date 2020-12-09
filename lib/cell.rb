@@ -28,7 +28,10 @@ class Cell
   end
 
   def render(arg = false)
-    if @fired_upon == true && empty? == false
+    if @ship != nil && @ship.sunk?
+      "X"
+    elsif
+      @fired_upon == true && empty? == false
       "H"
     elsif
       arg == true
