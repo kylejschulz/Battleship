@@ -58,7 +58,7 @@ class CellTest < Minitest::Test
 
     assert_equal "H", @cell_2.render
     assert_equal false, @cruiser.sunk?
-    #this is where we left off
+
     @cruiser.hit
     @cruiser.hit
 
