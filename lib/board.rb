@@ -43,9 +43,20 @@ class Board
 
   end
 
+  def check_overlap(coordinates)
+    bools = []
+    coordinates.each do |coordinate|
+      bools << @cells[coordinate].empty?
+    end
+    bools.include?(false)
+  end
+
   def valid_placement?(ship, coordinates)
     coordinate_breakdown(coordinates)
-    if (consecutive_letters(ship.length) && same_numbers) && (ship.length == coordinates.count)
+    if check_overlap(coordinates)
+      false
+    elsif
+      (consecutive_letters(ship.length) && same_numbers) && (ship.length == coordinates.count)
       true
     elsif
       (same_letters && consecutive_numbers(ship.length)) && (ship.length == coordinates.count)
@@ -100,4 +111,27 @@ class Board
     # end
     same_let.include?@letters #letter_array
   end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      @cells[coordinate].place_ship(ship)
+    end
+  end
+
+  def render(arg = false)
+    # "  1 2 3 4 \n" +
+    # "A #{@cells["A1"].render} . . . \n" +
+    # "B . . . . \n" +
+    # "C . . . . \n" +
+    # "D . . . . \n"
+
+    cell_array = []
+
+    @cells.each do |coordinate, cell|
+      # require "pry"; binding.pry
+      cell_array << cell.render(arg)
+    end
+    p cell_array
+  end
+
 end
