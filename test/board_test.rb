@@ -48,14 +48,22 @@ class BoardTest < Minitest::Test
   end
 
   def test_consecutive
-    assert_equal [], @board.coordinate_breakdown(["A4"])
-    # assert_equal [], @board.consecutive_letters
-    assert_equal [1,2,3], @board.consecutive_numbers(@cruiser.length)
-    assert_equal [1,2], @board.consecutive_numbers(@submarine.length)
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
     assert_equal false, @board.valid_placement?(@submarine, ["A1", "C1"])
     assert_equal false, @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
     assert_equal false, @board.valid_placement?(@submarine, ["C1", "B1"])
+  end
+
+  def test_diagonals
+
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
+    assert_equal false, @board.valid_placement?(@submarine, ["C2", "D3"])
+  end
+
+  def test_valid_placement_is_true
+    assert_equal true, @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
+    assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
+
   end
 
 end

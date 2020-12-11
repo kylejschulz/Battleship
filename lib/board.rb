@@ -33,83 +33,71 @@ class Board
     end
   end
 
-  def valid_placement?(ship, coordinates)
-    ship.length == coordinates.length && valid_coordinate?(coordinates)
+  def coordinate_breakdown(coordinates)
+    @numbers = []
+    @letters = []
+    coordinates.each do |coordinate|
+      @letters << coordinate[0]
+      @numbers << coordinate[1].to_i
+    end
+
   end
 
-  # def consecutive_letters
-  #   # a = ""A"".ord
-  #   # d = "D".ord
-  #   # test = []
-  #   #
-  #   # (a..d).each_cons(4) do |letters|
-  #   #   letters.each do |letter|
-  #   #     test << letter.chr
-  #   #   end
-  #   # end
-  #   # test
-  # end
-  #
-  # def consecutive_numbers(ship_length)
-  #   # test = []
-  #   # (1..4).each_cons(ship_length) do |numbers|
-  #   #     test << numbers
-  #   # end
-  #   # test.flatten.uniq
-  #
-  # end
-  #
-  #
-  # def same_number
-  #
-  # end
-  #
-  #
-  # def same_letter
-  #
-  # end
-
-    def coordinate_breakdown(coordinates)
-      @numbers = []
-      @letters = []
-      coordinates.each do |coordinate|
-        letters << coordinate[0]
-        numbers << coordinate[1].to_1
-      end
-
-
+  def valid_placement?(ship, coordinates)
+    coordinate_breakdown(coordinates)
+    if (consecutive_letters(ship.length) && same_numbers) && (ship.length == coordinates.count)
+      true
+    elsif
+      (same_letters && consecutive_numbers(ship.length)) && (ship.length == coordinates.count)
+      true
+    else
+      false
     end
+  end
 
-    def valid_placement?(ship, coordinates)
-      coordinate_breakdown(coordinates)
-      if consecutive_letters && same_numbers
-        true
-      elsif
-        same_letters && consecutive_numbers
-        true
-      else
-        false
-      end
+  def consecutive_letters(ship_length)
+    consecutive_letters = []
+    ('A'..'D').each_cons(ship_length) do |letters|
+      consecutive_letters << letters
     end
+    consecutive_letters.include?@letters
+  end
 
-    def consecutive_letters
-      consecutive_letters = [["A", "B", "C"], ["B", "C", "D"]]
-      consecutive_letters.include?@letters
+  def consecutive_numbers(ship_length)
+    consecutive_numbers = []
+    (1..4).each_cons(ship_length) do |number|
+      consecutive_numbers << number
     end
+    consecutive_numbers.include?@numbers
+  end
 
-    def consecutive_numbers
-      consecutive_numbers = [[1, 2, 3], [2, 3, 4]]
-      consecutive_numbers.include?@numbers
-    end
+  def same_numbers#(ship_length)
+    same_num = [[1,1], [2,2], [3,3], [4,4], [1,1,1],[2,2,2],[3,3,3],[4,4,4]]
 
-    def same_numbers
-      same_numbers = [[1, 1, 1], [2, 2, 2], [3,3,3], [4,4,4]]
-      same_numbers.include?@numbers
-    end
+    # (1..4).to_a.each do |num|
+    #   same_num << (num.to_s * ship_length)
+    #   end
+    #
+    # number_array = []
+    # same_num.each do |string|
+    #
+    #   number_array << string.split('')
+    # end
+     same_num.include?@numbers #number_array
+  end
 
-    def same_letters
-      same_letters = [["A", "A", "A"], ["B", "B", "B"], ["C","C","C"], ["D", "D", "D"]]
-      same_letters.include?@letters
-    end
-    
+
+
+  def same_letters#(ship_length)
+    same_let = [['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['A', 'A','A'], ['B', 'B', 'B'], ['C', 'C', 'C'], ['D', 'D', 'D']]
+
+    # ('A'..'D').to_a.each do |letter|
+    #   same_let << (letter * ship_length)
+    # end
+    # letter_array = []
+    # same_let.each do |string|
+    #   letter_array << string.split('')
+    # end
+    same_let.include?@letters #letter_array
+  end
 end
