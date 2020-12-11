@@ -84,35 +84,24 @@ class BoardTest < Minitest::Test
   end
 
   def test_board_render
-    expected1 = "  1 2 3 4 \n" +
-                "A . . . . \n" +
-                "B . . . . \n" +
-                "C . . . . \n" +
-                "D . . . . \n"
+    expected1 = " 1 2 3 4 A . . . . B . . . . C . . . . D . . . . "
+    expected2 = " 1 2 3 4 " + "A S S S . " + "B . . . . " + "C . . . . " + "D . . . . "
+    expected3 = " 1 2 3 4 " + "A H . . . " + "B . . . M " + "C X . . . " + "D X . . . "
+    expected4 = " 1 2 3 4 " + "A H S S . " + "B . . . M " + "C X . . . " + "D X . . . "
 
-
-    expected2 = "  1 2 3 4 \n" +
-                "A S S S . \n" +
-                "B . . . . \n" +
-                "C . . . . \n" +
-                "D . . . . \n"
-
-    expected3 = "  1 2 3 4 \n" +
-                "A H . . . \n" +
-                "B . . . M \n" +
-                "C X . . . \n" +
-                "D X . . . \n"
-
-    expected4 = "  1 2 3 4 \n" +
-                "A H S S . \n" +
-                "B . . . M \n" +
-                "C X . . . \n" +
-                "D X . . . \n"
+    assert_equal expected1, @board.render
 
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
-    # assert_equal expected1, @board.render
     assert_equal expected2, @board.render(true)
+
+    @board.place(@submarine, ["C1", "D1"])
+
+    @board.cells["A1"].fire_upon
+    @board.cells["B4"].fire_upon
+    @board.cells["C1"].fire_upon
+    @board.cells["D1"].fire_upon
+
     assert_equal expected3, @board.render
     assert_equal expected4, @board.render(true)
   end

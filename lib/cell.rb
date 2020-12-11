@@ -20,7 +20,6 @@ class Cell
   end
 
   def fire_upon
-    # require "pry"; binding.pry
     @fired_upon = true
     if empty? == false
       ship.health -= 1
@@ -34,7 +33,7 @@ class Cell
       @fired_upon == true && empty? == false
       "H"
     elsif
-      arg == true
+      arg == true && @ship != nil
       "S"
     elsif
       @fired_upon == true && empty? == true
