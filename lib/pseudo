@@ -1,8 +1,0 @@
-consecutive_numbers = method that creates all possible consecutive number combos
-consecutive_lettrs method that creates all possible consecutive number combos
-combine = method that combines each possible variation of number and letter combos
-acceptable_array = compare user input of answer_1 = ["A1", "A2, "A3"], or
-  answer_2 = ["A1", "A2, "A4"] against an array of all possible and allowed input
-  combos, aka "acceptable_array". answer_1 is contained in acceptable_array,
-  answer_2 is not. if an answer is not contained in acceptable array, computer
-  asks user for new placement input. 

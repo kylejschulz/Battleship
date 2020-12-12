@@ -1,4 +1,4 @@
-require './lib/cell'
+require './cell'
 
 class Board
   attr_reader :cells
