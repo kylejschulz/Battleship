@@ -1,3 +1,5 @@
+require './cell'
+
 class Board
   attr_reader :cells
   def initialize
@@ -43,9 +45,20 @@ class Board
 
   end
 
+  def check_overlap(coordinates)
+    bools = []
+    coordinates.each do |coordinate|
+      bools << @cells[coordinate].empty?
+    end
+    bools.include?(false)
+  end
+
   def valid_placement?(ship, coordinates)
     coordinate_breakdown(coordinates)
-    if (consecutive_letters(ship.length) && same_numbers) && (ship.length == coordinates.count)
+    if check_overlap(coordinates)
+      false
+    elsif
+      (consecutive_letters(ship.length) && same_numbers) && (ship.length == coordinates.count)
       true
     elsif
       (same_letters && consecutive_numbers(ship.length)) && (ship.length == coordinates.count)
@@ -86,8 +99,6 @@ class Board
      same_num.include?@numbers #number_array
   end
 
-
-
   def same_letters#(ship_length)
     same_let = [['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['A', 'A','A'], ['B', 'B', 'B'], ['C', 'C', 'C'], ['D', 'D', 'D']]
 
@@ -99,5 +110,42 @@ class Board
     #   letter_array << string.split('')
     # end
     same_let.include?@letters #letter_array
+  end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      @cells[coordinate].place_ship(ship)
+    end
+  end
+  #
+  # def render(arg = false)
+  #   # "  1 2 3 4 \n" +
+  #   # "A #{@cells["A1"].render} . . . \n" +
+  #   # "B . . . . \n" +
+  #   # "C . . . . \n" +
+  #   # "D . . . . \n"
+  #
+  #   cell_array = []
+  #
+  #   @cells.each do |coordinate, cell|
+  #     # require "pry"; binding.pry
+  #     cell_array << cell.render(arg)
+  #   end
+  #   p cell_array
+  # end
+
+
+  def create_row(range, show_ships = false)
+    @cells.values.slice(range).map do |cell|
+      cell.render(show_ships)
+    end.join(" ")
+  end
+
+  def render(show_ships = false)
+    row1 = create_row(0..3, show_ships)
+    row2 = create_row(4..7, show_ships)
+    row3 = create_row(8..11, show_ships)
+    row4 = create_row(12..15, show_ships)
+    " 1 2 3 4 A " + row1 + " B " + row2 + " C " + row3 + " D " + row4 + " "
   end
 end
