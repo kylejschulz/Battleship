@@ -1,4 +1,4 @@
-require './ship'
+require './lib/ship'
 class Cell
   attr_reader :coordinate, :ship, :fired_upon
   def initialize(coordinate, ship = nil)

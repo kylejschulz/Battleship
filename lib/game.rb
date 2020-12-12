@@ -1,6 +1,6 @@
-require './board'
-require './cell'
-require './ship'
+require './lib/board'
+require './lib/cell'
+require './lib/ship'
 
 class Game
 
@@ -28,12 +28,35 @@ class Game
                         ["B1","C1","D1"], ["B2","C2","D2"], ["B3","C3","D3"], ["B4","C4","D4"]]
     sub_placement = []
     rand = rand(0..15)
-    starting_point = cruiser_placement[rand]
-
+    cruiser_coords = cruiser_placement[rand]
     # computer_board.place(computer_submarine, random_coordinate)
-    @computer_board.place(@computer_cruiser, starting_point)
-
+    @computer_board.place(@computer_cruiser, cruiser_coords)
+    p "#{cruiser_coords}"
   end
+
+def comp_sub_placement
+  sub_placement = [["A1", "A2"],["A2", "A3"],["A3", "A4"],
+                  ["B1", "B2"],["B2", "B3"],["B3", "B4"],
+                  ["C1", "C2"],["C2", "C3"],["C3", "C4"],
+                  ["D1", "D2"],["D2", "D3"],["D3", "D4"],
+                  ["A1", "B1"], ["B1", "C1"], ["C1", "D1"],
+                  ["A2", "B2"], ["B2", "C2"], ["C2", "D2"],
+                  ["A3", "B3"], ["B3", "C3"], ["C3", "D3"],
+                  ["A4", "B4"], ["B4", "C4"], ["C4", "D4"]]
+    rand_sub = rand(0..23)
+    sub_coords = sub_placement[rand_sub]
+    sub_coords_empty = []
+    sub_coords.each do |coord|
+      sub_coords_empty << coord if coord.empty? == true
+    end
+
+    if sub_coords_empty.count != 2
+      comp_sub_placement
+    else
+      @computer_board.place(@computer_sub, sub_coords)
+    end
+  end
+
 
   def random_coordinate_array_generator
     # random_coordinate = @computer_board.cells.keys.shuffle
@@ -84,3 +107,4 @@ end
 
 game = Game.new
 game.computer_ship_placement
+game.comp_sub_placement
