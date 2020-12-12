@@ -45,17 +45,14 @@ def comp_sub_placement
                   ["A4", "B4"], ["B4", "C4"], ["C4", "D4"]]
     rand_sub = rand(0..23)
     sub_coords = sub_placement[rand_sub]
-    sub_coords_empty = []
-    sub_coords.each do |coord|
-      sub_coords_empty << coord if coord.empty? == true
-    end
 
-    if sub_coords_empty.count != 2
-      comp_sub_placement
-    else
+    loop do
+      sub_coords[0].empty? && sub_coords[1].empty?
       @computer_board.place(@computer_sub, sub_coords)
+      break
     end
-  end
+require "pry"; binding.pry
+end
 
 
   def random_coordinate_array_generator
