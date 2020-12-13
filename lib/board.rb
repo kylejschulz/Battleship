@@ -25,10 +25,7 @@ class Board
   end
 
   def valid_coordinate?(coordinate)
-    a = @cells.keys
-    b = [coordinate].flatten
-
-    if (b & a) == b
+    if (([coordinate].flatten) & (@cells.keys)) == ([coordinate].flatten)
       true
     else
       false
@@ -46,11 +43,11 @@ class Board
   end
 
   def check_overlap(coordinates)
-    bools = []
+    booleans = []
     coordinates.each do |coordinate|
-      bools << @cells[coordinate].empty?
+      booleans << @cells[coordinate].empty?
     end
-    bools.include?(false)
+    booleans.include?(false)
   end
 
   def valid_placement?(ship, coordinates)
@@ -96,7 +93,7 @@ class Board
     #
     #   number_array << string.split('')
     # end
-     same_num.include?@numbers #number_array
+    same_num.include?@numbers #number_array
   end
 
   def same_letters#(ship_length)
@@ -136,9 +133,11 @@ class Board
 
 
   def create_row(range, show_ships = false)
-    @cells.values.slice(range).map do |cell|
-      cell.render(show_ships)
-    end.join(" ")
+  row = @cells.values.slice(range).map do |cell_object|
+      # require "pry"; binding.pry
+      cell_object.render(show_ships)
+    end
+    row.join(" ")
   end
 
   def render(show_ships = false)
@@ -146,6 +145,8 @@ class Board
     row2 = create_row(4..7, show_ships)
     row3 = create_row(8..11, show_ships)
     row4 = create_row(12..15, show_ships)
+    # " 1 2 3 4 \nA " + row1 + " \nB " + row2 + " \nC " + row3 + " \nD " + row4 + " \n"
     " 1 2 3 4 A " + row1 + " B " + row2 + " C " + row3 + " D " + row4 + " "
+    # " 1 2 3 4 \nA " + row1 + " \nB " + row2 + " \nC " + row3 + " \nD " + row4 + " \n"
   end
 end
