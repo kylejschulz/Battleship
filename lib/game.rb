@@ -36,7 +36,7 @@ class Game
   end
 
   def computer_setup
-    p "First I will set-up my ship"
+    p "First I will set-up my ships"
     # require "pry"; binding.pry
     if (computer_cruiser_placement & computer_sub_placement) == []
       p @computer_board.render(true)
@@ -46,24 +46,35 @@ class Game
   end
 
   def human_setup
-    p "Human, I have laid out my ships on the grid.
-    You now need to lay out your two ships.
-    The Cruiser is three units long.
-      1 2 3 4
-    A . . . .
-    B . . . .
-    C . . . .
-    D . . . .
-    Enter the squares for the Cruiser (3 spaces):"
+    p "Human, I have laid out my ships on the grid."
+    p "You now need to lay out your two ships."
+    p "The Cruiser is three units long."
+    p "  1 2 3 4 "
+    p "A . . . ."
+    p "B . . . ."
+    p "C . . . ."
+    p "D . . . ."
     human_cruiser_setup
-    p "The Cruiser is three units long.
-      1 2 3 4
-    A . . . .
-    B . . . .
-    C . . . .
-    D . . . .
-    Enter the squares for the Cruiser (3 spaces):"
+    p "The Submarine is two units long."
+    p "  1 2 3 4 "
+    p "A . . . ."
+    p "B . . . ."
+    p "C . . . ."
+    p "D . . . ."
     human_submarine_setup
+  end
+
+  def human_cruiser_setup
+    p @human_board.render(true)
+    p "Please enter your locations for the Cruiser (3 consecutive spaces): like this A1 B1 C1 "
+    cruiser_coordinates = Array(gets.chomp.split(" "))
+    if @human_board.valid_placement?(@human_cruiser, cruiser_coordinates)
+      @human_board.place(@human_cruiser, cruiser_coordinates)
+      p @human_board.render(true)
+    else
+      p "That's not going to work, please try again"
+      human_cruiser_setup
+    end
   end
 
   def human_submarine_setup
@@ -76,19 +87,6 @@ class Game
     else
       p "That's not going to work, please try again"
       human_submarine_setup
-    end
-  end
-
-  def human_cruiser_setup
-    p @human_board.render(true)
-    p "Please enter your locations for the Cruiser (3 consecutive spaces): like this A1 B1 C1 "
-    cruiser_coordinates = Array(gets.chomp.split(" "))
-      if @human_board.valid_placement?(@human_cruiser, cruiser_coordinates)
-      @human_board.place(@human_cruiser, cruiser_coordinates)
-      p @human_board.render(true)
-    else
-      p "That's not going to work, please try again"
-      human_cruiser_setup
     end
   end
 
