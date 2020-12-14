@@ -4,6 +4,7 @@
 4. refactor same letters and same numbers refactors in board.rb
 5. examine necessity of required files in each file
 6. Jacob's sick-ass symbols
+7. Allow for accepting any case of alpha-numeric
 
 
 ## Iteration 3
