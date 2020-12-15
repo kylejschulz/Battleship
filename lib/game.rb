@@ -17,17 +17,22 @@ class Game
   end
 
   def start
+    start_message
+    start_up_conditional
+  end
+
+  def start_message
     puts "Welcome to BATTLESHIP
     Enter p to play. Enter q to quit."
+  end
 
+  def start_up_conditional
     player_choice = gets.chomp
-
     if player_choice == "q"
     p "See you next time"
       exit
     elsif player_choice == "p"
       set_up
-      #start_round
     else player_choice
       start
     end
@@ -39,15 +44,22 @@ class Game
   end
 
   def turn_setup
-    # require "pry"; binding.pry
     until @game_over == true
       turn_start
-      player_fire
-      computer_fire
-      report_player_shot
-      report_computer_shot
+      fire
+      report_shot
       check_win
     end
+  end
+
+  def fire
+    player_fire
+    computer_fire
+  end
+
+  def report_shot
+    report_player_shot
+    report_computer_shot
   end
 
   def set_up
@@ -55,17 +67,38 @@ class Game
     turn_setup
   end
 
+
+  # def computer_setup
+  #   if (computer_cruiser_coordinates & computer_submarine_coordinates) == []
+  #     computer_cruiser_placement(computer_cruiser_coordinates)
+  #     computer_submarine_placement(computer_submarine_coordinates)
+  #     puts @computer_board.render(true)
+  #     p "First I will set-up my ships"
+  #   else
+  #     computer_setup
+  #   end
+  # end
+
+
   def computer_setup
-    p "First I will set-up my ships"
-    # require "pry"; binding.pry
-    if (computer_cruiser_placement & computer_sub_placement) == []
-      p @computer_board.render(true)
+    @computer_board = Board.new
+    if (computer_cruiser_placement(computer_cruiser_coordinates) & computer_submarine_placement(computer_submarine_coordinates)) == []
+      # (computer_cruiser_placement(computer_cruiser_coordinates) && computer_submarine_placement(computer_submarine_coordinates))
+      puts @computer_board.render(true)
+      p "First I will set-up my ships"
     else
       computer_setup
     end
   end
 
   def human_setup
+    human_cruiser_text
+    human_cruiser_setup
+    human_submarine_text
+    human_submarine_setup
+  end
+
+  def human_cruiser_text
     p "Human, I have laid out my ships on the grid."
     p "You now need to lay out your two ships."
     puts "The Cruiser is three units long."
@@ -74,23 +107,27 @@ class Game
       "B . . . . \n" +
       "C . . . . \n" +
       "D . . . . \n"
-    human_cruiser_setup
-    puts "The Submarine is two units long."
-      "  1 2 3 4 \n" +
-      "A . . . . \n" +
-      "B . . . . \n" +
-      "C . . . . \n" +
-      "D . . . . \n"
-    human_submarine_setup
   end
 
+    def human_submarine_text
+      puts "The Submarine is two units long."
+        "  1 2 3 4 \n" +
+        "A . . . . \n" +
+        "B . . . . \n" +
+        "C . . . . \n" +
+        "D . . . . \n"
+    end
+    def human_board_render
+      puts @human_board.render(true)
+    end
+
   def human_cruiser_setup
-    puts @human_board.render(true)
+    human_board_render
     p "Please enter your locations for the Cruiser (3 consecutive spaces): like this A1 B1 C1 "
     cruiser_coordinates = Array(gets.chomp.upcase.split(" "))
     if @human_board.valid_placement?(@human_cruiser, cruiser_coordinates)
       @human_board.place(@human_cruiser, cruiser_coordinates)
-      puts @human_board.render(true)
+      human_board_render
     else
       p "That's not going to work, please try again"
       human_cruiser_setup
@@ -98,28 +135,32 @@ class Game
   end
 
   def human_submarine_setup
-    puts @human_board.render(true)
+    human_board_render
     p "Please enter your locations for the Submarine (2 consecutive spaces): like this D1 D2 "
     submarine_coordinates = Array(gets.chomp.upcase.split(" "))
       if @human_board.valid_placement?(@human_submarine, submarine_coordinates)
       @human_board.place(@human_submarine, submarine_coordinates)
-      puts @human_board.render(true)
+      human_board_render
     else
       p "That's not going to work, please try again"
       human_submarine_setup
     end
   end
 
-  def computer_cruiser_placement
+  def computer_cruiser_coordinates
     cruiser_placement = [["A1", "A2", "A3"],["B1", "B2", "B3"],["C1", "C2", "C3"],["D1", "D2", "D3"],
                         ["A2", "A3", "A4"],["B2", "B3", "B4"],["C2", "C3", "C4"],["D2", "D3", "D4"],
                         ["A1","B1","C1"], ["A2","B2","C2"], ["A3","B3","C3"], ["A4","B4","C4"],
                         ["B1","C1","D1"], ["B2","C2","D2"], ["B3","C3","D3"], ["B4","C4","D4"]]
     random_cruiser_coordinates = cruiser_placement.sample
-    @computer_board.place(@computer_cruiser, random_cruiser_coordinates)
+    random_cruiser_coordinates
   end
 
-  def computer_sub_placement
+  def computer_cruiser_placement(computer_cruiser_coordinates)
+    @computer_board.place(@computer_cruiser, computer_cruiser_coordinates)
+  end
+
+  def computer_submarine_coordinates
     submarine_placement = [["A1", "A2"],["A2", "A3"],["A3", "A4"],
                     ["B1", "B2"],["B2", "B3"],["B3", "B4"],
                     ["C1", "C2"],["C2", "C3"],["C3", "C4"],
@@ -128,8 +169,12 @@ class Game
                     ["A2", "B2"], ["B2", "C2"], ["C2", "D2"],
                     ["A3", "B3"], ["B3", "C3"], ["C3", "D3"],
                     ["A4", "B4"], ["B4", "C4"], ["C4", "D4"]]
-    random_submarine_coordinates = submarine_placement.sample
-    @computer_board.place(@computer_submarine, random_submarine_coordinates)
+    random_submaine_coordinates = submarine_placement.sample
+    random_submaine_coordinates
+  end
+
+    def computer_submarine_placement(computer_submarine_coordinates)
+    @computer_board.place(@computer_submarine, computer_submarine_coordinates)
   end
 end
 
@@ -139,7 +184,7 @@ def turn_start
   puts @computer_board.render(true)
 
   puts "==============PLAYER BOARD=============="
-  puts @human_board.render(true)
+  human_board_render
 end
 
 def player_fire
@@ -216,55 +261,3 @@ def check_win
     @game_over = true
   end
 end
-
-
-# def set_up
-# p "hello"
-#   computer_ship_placement
-# #   player_ship_placement
-# #   # Need computer board, need player board
-# #   # Computer ship placement, player ship placement
-# end
-# #
-
-# def random_coordinate_array_generator
-  # random_coordinate = @computer_board.cells.keys.shuffle
-  #
-  # start_array = ['3', '4', 'C', 'D']
-  # p random_coordinate unless random_coordinate.!include?(start_array)
-  # if random_coordinate.include? start_array
-  #   p "#{random_coordinate.length} contains '34CD'"
-  # else
-  #   puts "#{random_coordinate} doesn't contain '34CD'"
-  # end
-  # !random_coordinate.include?("4") ||
-  # !random_coordinate.include?("C") ||
-  # !random_coordinate.include?("D")
-
-  # if random_coordinate for cruiser does not include
-  #   c,d, 3 or 4 then it is a valid coordinate
-  # then we will take the random_coordinate and
-  # either choose a coordinate down or right
-  # then the final coordinate will be adjacent to
-  # second coordinate
-# end
-
-# def player_ship_placement
-#   puts "I have laid out my ships on the grid.
-# You now need to lay out your two ships.
-# The Cruiser is three units long and the Submarine is two units long.
-#   1 2 3 4
-# A . . . .
-# B . . . .
-# C . . . .
-# D . . . .
-# Enter the squares for the Cruiser (3 spaces):"
-# end
-#
-# def turn
-#   #board.render?
-#   #Player choosing a coordinate to fire on
-#   #Computer choosing a coordinate to fire on
-#   #Reporting the result of the Player’s shot
-#   #Reporting the result of the Computer’s shot
-# end
