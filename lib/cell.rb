@@ -20,9 +20,13 @@ class Cell
   end
 
   def fire_upon
-    @fired_upon = true
-    if empty? == false
+    if fired_upon?
+      "already shot"
+    elsif empty? == false
       ship.health -= 1
+      @fired_upon = true
+    else
+      @fired_upon = true
     end
   end
 
