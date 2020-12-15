@@ -1,10 +1,6 @@
-1. fire_upon method in cell.rb prevent firing in same spot to sink ship
-2. fire upon method more robust, check for valid input
-3. In board test and board.render add new lines
-4. refactor same letters and same numbers refactors in board.rb
-5. examine necessity of required files in each file
-6. Jacob's sick-ass symbols
-7. Allow for accepting any case of alpha-numeric
+1. write tests for game class
+2. refactor same letters and same numbers refactors in board.rb
+3. Jacob's sick-ass symbols
 
 
 ## Iteration 3
@@ -30,33 +26,13 @@ all text prompts to.
 5. ruby runner.rb -> game.rb will begin game and call on all
 other classes, to produce game interaction and text.
 
-## Functionality Checklist -
-
-- Main Menu:
-
-User is shown the main menu where they can play or quit
-
-- Setup:
-
-Computer can place ships randomly in valid locations
-User can enter valid sequences to place both ships
-Entering invalid ship placements prompts user to enter valid placements
-
-- Turn:
-
-User board is displayed showing hits, misses, sunken ships, and ships
-Computer board is displayed showing hits, misses, and sunken ships
-Computer chooses a random shot
-Computer does not fire on the same spot twice
-User can choose a valid coordinate to fire on
-Entering invalid coordinate prompts user to enter valid coordinate
-Both computer and player shots are reported as a hit, sink, or miss
-User is informed when they have already fired on a coordinate
-Board is updated after a turn
-
-- End Game:
-
-Game ends when all the user’s ships are sunk
-Game ends when all the computer’s ships are sunk
-Game reports who won
-Game returns user back to the Main Menu
+# def computer_setup
+#   if (computer_cruiser_coordinates & computer_submarine_coordinates) == []
+#     computer_cruiser_placement(computer_cruiser_coordinates)
+#     computer_submarine_placement(computer_submarine_coordinates)
+#     puts @computer_board.render(true)
+#     p "First I will set-up my ships"
+#   else
+#     computer_setup
+#   end
+# end

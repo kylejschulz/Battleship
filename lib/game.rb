@@ -1,6 +1,4 @@
 require './lib/board'
-require './lib/cell'
-require './lib/ship'
 
 class Game
 
@@ -67,23 +65,9 @@ class Game
     turn_setup
   end
 
-
-  # def computer_setup
-  #   if (computer_cruiser_coordinates & computer_submarine_coordinates) == []
-  #     computer_cruiser_placement(computer_cruiser_coordinates)
-  #     computer_submarine_placement(computer_submarine_coordinates)
-  #     puts @computer_board.render(true)
-  #     p "First I will set-up my ships"
-  #   else
-  #     computer_setup
-  #   end
-  # end
-
-
   def computer_setup
     @computer_board = Board.new
     if (computer_cruiser_placement(computer_cruiser_coordinates) & computer_submarine_placement(computer_submarine_coordinates)) == []
-      # (computer_cruiser_placement(computer_cruiser_coordinates) && computer_submarine_placement(computer_submarine_coordinates))
       puts @computer_board.render(true)
       p "First I will set-up my ships"
     else
@@ -109,17 +93,17 @@ class Game
       "D . . . . \n"
   end
 
-    def human_submarine_text
-      puts "The Submarine is two units long."
-        "  1 2 3 4 \n" +
-        "A . . . . \n" +
-        "B . . . . \n" +
-        "C . . . . \n" +
-        "D . . . . \n"
-    end
-    def human_board_render
-      puts @human_board.render(true)
-    end
+  def human_submarine_text
+    puts "The Submarine is two units long."
+      "  1 2 3 4 \n" +
+      "A . . . . \n" +
+      "B . . . . \n" +
+      "C . . . . \n" +
+      "D . . . . \n"
+  end
+  def human_board_render
+    puts @human_board.render(true)
+  end
 
   def human_cruiser_setup
     human_board_render
@@ -172,24 +156,20 @@ class Game
     random_submaine_coordinates = submarine_placement.sample
     random_submaine_coordinates
   end
-
     def computer_submarine_placement(computer_submarine_coordinates)
     @computer_board.place(@computer_submarine, computer_submarine_coordinates)
   end
 end
 
-
 def turn_start
   puts"=============COMPUTER BOARD============="
   puts @computer_board.render(true)
-
   puts "==============PLAYER BOARD=============="
   human_board_render
 end
 
 def player_fire
   puts "Pick your coordinates to fire on: "
-
   valid_shot = false
   until valid_shot
     player_choice = gets.chomp.upcase
@@ -198,12 +178,10 @@ def player_fire
             "Please select a valid coordinate: "
     elsif @computer_board.cells[player_choice].fire_upon == "already shot"
       puts "Already fired on. Choose a valid coordinate"
-
     else
       valid_shot = true
     end
   end
-
   @computer_board.cells[player_choice].fire_upon
   @player_choice = player_choice
 end
@@ -212,7 +190,6 @@ def computer_fire
   shots = @human_board.cells.keys
   computer_choice = shots.sample
   valid_shot = false
-
   until valid_shot
     if @human_board.cells[computer_choice].fire_upon == "already shot"
       computer_choice = shots.sample
@@ -220,14 +197,12 @@ def computer_fire
       valid_shot = true
     end
   end
-
   @human_board.cells[computer_choice].fire_upon
   @computer_choice = computer_choice
 end
 
 def report_player_shot
   cell = @computer_board.cells[@player_choice]
-
   if !cell.empty? && cell.ship.sunk?
     puts "You sunk the computer's #{cell.ship.name}!"
   elsif cell.empty?
@@ -239,13 +214,12 @@ end
 
 def report_computer_shot
   cell = @human_board.cells[@computer_choice]
-
   if !cell.empty? && cell.ship.sunk?
-    puts "The computer sunk your#{cell.ship.name}"
+    puts "The computer sunk your #{cell.ship.name}"
   elsif cell.empty?
     puts "The computer's shot on #{@computer_choice} missed!"
   elsif !cell.empty?
-    puts "THe computer hit your #{cell.ship.name}!"
+    puts "The computer hit your #{cell.ship.name}!"
   end
 end
 
