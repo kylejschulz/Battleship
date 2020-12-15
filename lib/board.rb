@@ -45,7 +45,11 @@ class Board
   def check_overlap(coordinates)
     booleans = []
     coordinates.each do |coordinate|
-      booleans << @cells[coordinate].empty?
+      if @cells[coordinate] == nil
+        booleans << false
+      else
+        booleans << @cells[coordinate].empty?
+      end
     end
     booleans.include?(false)
   end
@@ -145,8 +149,13 @@ class Board
     row2 = create_row(4..7, show_ships)
     row3 = create_row(8..11, show_ships)
     row4 = create_row(12..15, show_ships)
+    "  1 2 3 4 \n" +
+    "A #{row1}\n" +
+    "B #{row2}\n" +
+    "C #{row3}\n" +
+    "D #{row4}\n"
     # " 1 2 3 4 \nA " + row1 + " \nB " + row2 + " \nC " + row3 + " \nD " + row4 + " \n"
-    " 1 2 3 4 A " + row1 + " B " + row2 + " C " + row3 + " D " + row4 + " "
+    # " 1 2 3 4 \nA" + row1 + " \nB " + row2 + " \nC " + row3 + " \nD " + row4 + " "
     # " 1 2 3 4 \nA " + row1 + " \nB " + row2 + " \nC " + row3 + " \nD " + row4 + " \n"
   end
 end
