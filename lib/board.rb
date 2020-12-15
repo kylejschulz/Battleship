@@ -118,6 +118,8 @@ class Board
       @cells[coordinate].place_ship(ship)
     end
   end
+
+
   #
   # def render(arg = false)
   #   # "  1 2 3 4 \n" +
