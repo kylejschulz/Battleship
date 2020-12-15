@@ -66,15 +66,23 @@ class BoardTest < Minitest::Test
 
   def test_it_can_place_ship
     @board.place(@cruiser, ["A1", "A2", "A3"])
+    @board.place(@submarine, ["B1", "B2"])
 
     cell_1 = @board.cells["A1"]
     cell_2 = @board.cells["A2"]
     cell_3 = @board.cells["A3"]
+    cell_4 = @board.cells["B1"]
+    cell_5 = @board.cells["B2"]
+
 
     assert_equal @cruiser, cell_1.ship
     assert_equal @cruiser, cell_2.ship
     assert_equal @cruiser, cell_3.ship
+    assert_equal @submarine, cell_4.ship
+    assert_equal @submarine, cell_5.ship
     assert_equal true, cell_3.ship == cell_2.ship
+    assert_equal true, cell_2.ship == cell_1.ship
+    assert_equal true, cell_4.ship == cell_5.ship 
   end
 
   def test_overlapping_ships
@@ -84,7 +92,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_board_render
-    expected1 = " 1 2 3 4 A . . . . B . . . . C . . . . D . . . . "
+    expected1 = " 1 2 3 4 " + "A . . . . " + "B . . . . " + "C . . . . " + "D . . . . "
     expected2 = " 1 2 3 4 " + "A S S S . " + "B . . . . " + "C . . . . " + "D . . . . "
     expected3 = " 1 2 3 4 " + "A H . . . " + "B . . . M " + "C X . . . " + "D X . . . "
     expected4 = " 1 2 3 4 " + "A H S S . " + "B . . . M " + "C X . . . " + "D X . . . "
