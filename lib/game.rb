@@ -16,11 +16,17 @@ class Game
   end
 
   def start
+    start_message
+    start_up_conditional
+  end
+
+  def start_message
     puts "Welcome to BATTLESHIP
     Enter p to play. Enter q to quit."
+  end
 
-    player_choice = gets.chomp
-
+  def start_up_conditional
+    player_choice = gets.chomp 
     if player_choice == "q"
     puts "See you next time"
       exit
