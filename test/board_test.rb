@@ -82,7 +82,7 @@ class BoardTest < Minitest::Test
     assert_equal @submarine, cell_5.ship
     assert_equal true, cell_3.ship == cell_2.ship
     assert_equal true, cell_2.ship == cell_1.ship
-    assert_equal true, cell_4.ship == cell_5.ship 
+    assert_equal true, cell_4.ship == cell_5.ship
   end
 
   def test_overlapping_ships
@@ -92,10 +92,29 @@ class BoardTest < Minitest::Test
   end
 
   def test_board_render
-    expected1 = " 1 2 3 4 " + "A . . . . " + "B . . . . " + "C . . . . " + "D . . . . "
-    expected2 = " 1 2 3 4 " + "A S S S . " + "B . . . . " + "C . . . . " + "D . . . . "
-    expected3 = " 1 2 3 4 " + "A H . . . " + "B . . . M " + "C X . . . " + "D X . . . "
-    expected4 = " 1 2 3 4 " + "A H S S . " + "B . . . M " + "C X . . . " + "D X . . . "
+    expected1 =   "  1 2 3 4 \n" +
+                  "A . . . .\n" +
+                  "B . . . .\n" +
+                  "C . . . .\n" +
+                  "D . . . .\n"
+    expected2 = "  1 2 3 4 \n" +
+                "A S S S .\n" +
+                "B . . . .\n" +
+                "C . . . .\n" +
+                "D . . . .\n"
+
+    expected3 = "  1 2 3 4 \n" +
+                "A H . . .\n" +
+                "B . . . M\n" +
+                "C X . . .\n" +
+                "D X . . .\n"
+
+
+    expected4 = "  1 2 3 4 \n" +
+                "A H S S .\n" +
+                "B . . . M\n" +
+                "C X . . .\n" +
+                "D X . . .\n"
 
     assert_equal expected1, @board.render
 

@@ -38,7 +38,6 @@ class Game
   end
 
   def turn_setup
-    # require "pry"; binding.pry
     turn_start
     until @game_over == true
       fire

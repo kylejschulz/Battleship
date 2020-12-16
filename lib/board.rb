@@ -39,7 +39,6 @@ class Board
       @letters << coordinate[0]
       @numbers << coordinate[1].to_i
     end
-
   end
 
   def check_overlap(coordinates)
@@ -85,32 +84,14 @@ class Board
     consecutive_numbers.include?@numbers
   end
 
-  def same_numbers#(ship_length)
+  def same_numbers
     same_num = [[1,1], [2,2], [3,3], [4,4], [1,1,1],[2,2,2],[3,3,3],[4,4,4]]
-
-    # (1..4).to_a.each do |num|
-    #   same_num << (num.to_s * ship_length)
-    #   end
-    #
-    # number_array = []
-    # same_num.each do |string|
-    #
-    #   number_array << string.split('')
-    # end
-    same_num.include?@numbers #number_array
+    same_num.include?@numbers
   end
 
-  def same_letters#(ship_length)
+  def same_letters
     same_let = [['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['A', 'A','A'], ['B', 'B', 'B'], ['C', 'C', 'C'], ['D', 'D', 'D']]
-
-    # ('A'..'D').to_a.each do |letter|
-    #   same_let << (letter * ship_length)
-    # end
-    # letter_array = []
-    # same_let.each do |string|
-    #   letter_array << string.split('')
-    # end
-    same_let.include?@letters #letter_array
+    same_let.include?@letters
   end
 
   def place(ship, coordinates)
@@ -119,28 +100,8 @@ class Board
     end
   end
 
-
-  #
-  # def render(arg = false)
-  #   # "  1 2 3 4 \n" +
-  #   # "A #{@cells["A1"].render} . . . \n" +
-  #   # "B . . . . \n" +
-  #   # "C . . . . \n" +
-  #   # "D . . . . \n"
-  #
-  #   cell_array = []
-  #
-  #   @cells.each do |coordinate, cell|
-  #     # require "pry"; binding.pry
-  #     cell_array << cell.render(arg)
-  #   end
-  #   p cell_array
-  # end
-
-
   def create_row(range, show_ships = false)
   row = @cells.values.slice(range).map do |cell_object|
-      # require "pry"; binding.pry
       cell_object.render(show_ships)
     end
     row.join(" ")
@@ -156,8 +117,5 @@ class Board
     "B #{row2}\n" +
     "C #{row3}\n" +
     "D #{row4}\n"
-    # " 1 2 3 4 \nA " + row1 + " \nB " + row2 + " \nC " + row3 + " \nD " + row4 + " \n"
-    # " 1 2 3 4 \nA" + row1 + " \nB " + row2 + " \nC " + row3 + " \nD " + row4 + " "
-    # " 1 2 3 4 \nA " + row1 + " \nB " + row2 + " \nC " + row3 + " \nD " + row4 + " \n"
   end
 end
