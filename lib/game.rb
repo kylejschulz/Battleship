@@ -1,4 +1,5 @@
 require './lib/board'
+require './lib/player_messages'
 
 class Game
 
@@ -13,16 +14,17 @@ class Game
     @computer_board = Board.new
     @computer_cruiser = Ship.new("Cruiser", 3)
     @computer_submarine = Ship.new("Submarine", 2)
+    @messages = PlayerMessages.new
   end
 
   def start
-    start_message
+    @messages.start_message
     start_up_conditional
   end
 
-  def start_message
-    puts "Welcome to BATTLESHIP
-    Enter p to play. Enter q to quit."
+  def restart
+    @messages.restart_message
+    set_up
   end
 
   def start_up_conditional
@@ -32,7 +34,6 @@ class Game
       exit
     elsif player_choice == "p"
       set_up
-      #start_round
     else player_choice
       start
     end
@@ -78,37 +79,30 @@ class Game
 
   def human_cruiser_setup
     puts @human_board.render(true)
-    human_cruiser_text
+    @messages.human_cruiser_text
     cruiser_coordinates = Array(gets.chomp.upcase.split(" "))
     if @human_board.valid_placement?(@human_cruiser, cruiser_coordinates)
       @human_board.place(@human_cruiser, cruiser_coordinates)
     else
-      puts "That's not going to work, please try again"
+      @messages.wrong_coordinate
       human_cruiser_setup
     end
   end
 
-  def human_cruiser_text
-    puts "Computer player has placed their ships."
-    puts "Enter the location for your Cruiser (3 consecutive spaces): like this A1 B1 C1 "
-  end
-
   def human_submarine_setup
     puts @human_board.render(true)
-    human_submarine_text
+    @messages.human_submarine_text
     submarine_coordinates = Array(gets.chomp.upcase.split(" "))
       if @human_board.valid_placement?(@human_submarine, submarine_coordinates)
       @human_board.place(@human_submarine, submarine_coordinates)
       puts @human_board.render(true)
     else
-      puts "That's not going to work, please try again"
+      @messages.wrong_coordinate
       human_submarine_setup
     end
   end
 
-  def human_submarine_text
-    puts "Please enter your locations for the Submarine (2 consecutive spaces): like this D1 D2 "
-  end
+
 
   def random_cruiser_coordinates
     cruiser_placement = [["A1", "A2", "A3"],["B1", "B2", "B3"],["C1", "C2", "C3"],["D1", "D2", "D3"],
@@ -140,15 +134,15 @@ class Game
 
   def turn_start
     if @turn == 'player'
-      puts"=============COMPUTER BOARD============="
+      @messages.computer_header
       puts @computer_board.render
-      puts "==============PLAYER BOARD=============="
+      @messages.player_header
       puts @human_board.render(true)
     end
   end
 
   def player_fired_on
-    puts "enter your coordinate: "
+    @messages.enter_coordinates
     @player_shot = gets.strip.upcase
   end
 
@@ -160,7 +154,7 @@ class Game
   def valid_shot(coordinate)
     if @turn == "player"
       if !@computer_board.valid_coordinate?(coordinate)
-        puts "#{coordinate} Not valid"
+        puts "#{coordinate} not valid"
         false
       elsif @computer_board.cells[coordinate].fire_upon == "already shot"
         puts "#{coordinate} already shot"
@@ -212,10 +206,10 @@ class Game
 
   def check_win
     if @human_cruiser.sunk? && @human_submarine.sunk?
-      puts "way to lose to a computer"
+      @messages.player_loss
       @game_over = true
     elsif @computer_submarine.sunk? && @computer_cruiser.sunk?
-      puts "congrats on beating a computer"
+      @messages.player_win
       @game_over = true
     end
   end
@@ -229,12 +223,14 @@ class Game
   end
 
   def play_again
-    puts "play again? (y/n)? "
+    @messages.play_again
     answer = gets.chomp.upcase
     if answer == 'Y' || answer == 'YES'
-      Game.new.start
+      Game.new.restart
+    elsif answer == 'N' || answer == 'NO'
+      @messages.thanks
     else
-      puts "Thanks for Playing!!"
+      play_again
     end
   end
 end
