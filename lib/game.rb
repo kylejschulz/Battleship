@@ -26,7 +26,7 @@ class Game
   end
 
   def start_up_conditional
-    player_choice = gets.chomp 
+    player_choice = gets.chomp
     if player_choice == "q"
     puts "See you next time"
       exit
@@ -78,8 +78,7 @@ class Game
 
   def human_cruiser_setup
     puts @human_board.render(true)
-    puts "Computer player has placed their ships."
-    puts "Enter the location for your Cruiser (3 consecutive spaces): like this A1 B1 C1 "
+    human_cruiser_text
     cruiser_coordinates = Array(gets.chomp.upcase.split(" "))
     if @human_board.valid_placement?(@human_cruiser, cruiser_coordinates)
       @human_board.place(@human_cruiser, cruiser_coordinates)
@@ -89,9 +88,14 @@ class Game
     end
   end
 
+  def human_cruiser_text
+    puts "Computer player has placed their ships."
+    puts "Enter the location for your Cruiser (3 consecutive spaces): like this A1 B1 C1 "
+  end
+
   def human_submarine_setup
     puts @human_board.render(true)
-    puts "Please enter your locations for the Submarine (2 consecutive spaces): like this D1 D2 "
+    human_submarine_text
     submarine_coordinates = Array(gets.chomp.upcase.split(" "))
       if @human_board.valid_placement?(@human_submarine, submarine_coordinates)
       @human_board.place(@human_submarine, submarine_coordinates)
@@ -100,6 +104,10 @@ class Game
       puts "That's not going to work, please try again"
       human_submarine_setup
     end
+  end
+
+  def human_submarine_text
+    puts "Please enter your locations for the Submarine (2 consecutive spaces): like this D1 D2 "
   end
 
   def random_cruiser_coordinates
@@ -141,7 +149,7 @@ class Game
 
   def player_fired_on
     puts "enter your coordinate: "
-    @player_shot = gets.chomp.upcase
+    @player_shot = gets.strip.upcase
   end
 
   def computer_choice
