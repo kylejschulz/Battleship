@@ -1,6 +1,6 @@
 class PlayerMessages
   def start_message
-    puts "Welcome to BATTLESHIP"
+    puts "=====Welcome to BATTLESHIP====="
     puts "Enter p to play. Enter q to quit."
   end
 

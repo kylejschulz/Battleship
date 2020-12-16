@@ -187,20 +187,23 @@ class Game
     end
   end
 
+
   def report_shot
     if @turn == 'player'
       cell = @computer_board.cells[@player_shot]
-      player = "player"
+      player = "you"
+      player_2 = "The computer's"
     else
       cell = @human_board.cells[@computer_shot]
-      player = "computer"
+      player = "The computer"
+      player_2 = "your"
     end
     if !cell.empty? && cell.ship.sunk?
-      puts "#{player} sunk the computer's #{cell.ship.name}!"
+      puts "#{player} sunk the #{player_2} #{cell.ship.name}!"
     elsif cell.empty?
-      puts "#{player} shot on #{cell.coordinate} missed!"
+      puts "#{player} shot on #{cell.coordinate} and missed!"
     elsif !cell.empty?
-      puts "#{player} hit the computer's #{cell.ship.name}!"
+      puts "#{player} hit the #{player_2} #{cell.ship.name}!"
     end
   end
 
