@@ -1,4 +1,5 @@
 require './lib/board'
+require './lib/player_messages'
 
 class Game
 
@@ -13,17 +14,18 @@ class Game
     @computer_board = Board.new
     @computer_cruiser = Ship.new("Cruiser", 3)
     @computer_submarine = Ship.new("Submarine", 2)
+    @messages = PlayerMessages.new
   end
 
   def start
-    start_message
+    @messages.start_message
     start_up_conditional
   end
 
-  def start_message
-    puts "Welcome to BATTLESHIP
-    Enter p to play. Enter q to quit."
-  end
+  # def start_message
+  #   puts "Welcome to BATTLESHIP
+  #   Enter p to play. Enter q to quit."
+  # end
 
   def start_up_conditional
     player_choice = gets.chomp
@@ -32,7 +34,6 @@ class Game
       exit
     elsif player_choice == "p"
       set_up
-      #start_round
     else player_choice
       start
     end
