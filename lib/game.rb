@@ -80,7 +80,7 @@ class Game
   def human_cruiser_setup
     puts @human_board.render(true)
     @messages.human_cruiser_text
-    cruiser_coordinates = Array(gets.chomp.upcase.split(" "))
+    cruiser_coordinates = Array(gets.strip.upcase.split(" "))
     if @human_board.valid_placement?(@human_cruiser, cruiser_coordinates)
       @human_board.place(@human_cruiser, cruiser_coordinates)
     else
@@ -92,7 +92,7 @@ class Game
   def human_submarine_setup
     puts @human_board.render(true)
     @messages.human_submarine_text
-    submarine_coordinates = Array(gets.chomp.upcase.split(" "))
+    submarine_coordinates = Array(gets.strip.upcase.split(" "))
       if @human_board.valid_placement?(@human_submarine, submarine_coordinates)
       @human_board.place(@human_submarine, submarine_coordinates)
       puts @human_board.render(true)

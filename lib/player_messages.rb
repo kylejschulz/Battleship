@@ -9,8 +9,8 @@ class PlayerMessages
   end
 
   def human_cruiser_text
-    puts "Computer player has placed their ships."
-    puts "Enter the location for your Cruiser (3 consecutive spaces): Like this A1 B1 C1 "
+    puts "Computer has placed their ships."
+    puts "Hurry up, and enter the location for your Cruiser (3 consecutive spaces): Like this A1 B1 C1 "
   end
 
   def wrong_coordinate
@@ -18,7 +18,7 @@ class PlayerMessages
   end
 
   def human_submarine_text
-    puts "Please enter your locations for the Submarine (2 consecutive spaces): Like this D1 D2 "
+    puts "Please hurry, and enter your locations for the Submarine (2 consecutive spaces): Like this D1 D2 "
   end
 
   def computer_header
