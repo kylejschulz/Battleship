@@ -38,15 +38,15 @@ class PlayerMessages
   end
 
   def player_win
-    puts "Congrats on beating a computer!"
+    puts "Congrats on beating a computer, on easy mode!"
   end
 
   def play_again
-    puts "Play again? (y/n)? "
+    puts "I'm so lonely... Play again? I prefer to not play by myself... (y/n)? "
   end
 
   def thanks
-    puts "Thanks for Playing!!"
+    puts "Whatever, jokes on you... Can't believe you actually played a full game of BATTLESHIP!!"
   end
 
 end
