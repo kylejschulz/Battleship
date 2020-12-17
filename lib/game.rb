@@ -28,7 +28,7 @@ class Game
   end
 
   def start_up_conditional
-    player_choice = gets.chomp
+    player_choice = gets.strip.downcase
     if player_choice == "q"
     puts "See you next time"
       exit
