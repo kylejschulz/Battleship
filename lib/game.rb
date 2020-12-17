@@ -227,10 +227,10 @@ class Game
 
   def play_again
     @messages.play_again
-    answer = gets.chomp.upcase
-    if answer == 'Y' || answer == 'YES'
+    answer = gets.strip.downcase
+    if answer == 'y' || answer == 'yes'
       Game.new.restart
-    elsif answer == 'N' || answer == 'NO'
+    elsif answer == 'n' || answer == 'no'
       @messages.thanks
     else
       play_again
