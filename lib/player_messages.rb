@@ -22,11 +22,11 @@ class PlayerMessages
   end
 
   def computer_header
-    puts"=============COMPUTER BOARD============="
+    puts "=============COMPUTERS BOARD============="
   end
 
   def player_header
-    puts "==============PLAYER BOARD=============="
+    puts "==============YOUR BOARD=============="
   end
 
   def enter_coordinates
