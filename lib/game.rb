@@ -209,9 +209,17 @@ class Game
 
   def check_win
     if @human_cruiser.sunk? && @human_submarine.sunk?
+      @messages.computer_header
+      puts @computer_board.render(true)
+      @messages.player_header
+      puts @human_board.render(true)
       @messages.player_loss
       @game_over = true
     elsif @computer_submarine.sunk? && @computer_cruiser.sunk?
+      @messages.computer_header
+      puts @computer_board.render(true)
+      @messages.player_header
+      puts @human_board.render(true)
       @messages.player_win
       @game_over = true
     end
